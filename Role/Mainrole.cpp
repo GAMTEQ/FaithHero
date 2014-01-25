@@ -99,7 +99,7 @@ bool Mainrole::update(double dt) {
 }
 
 void Mainrole::createOutlineSprite() {
-    
+    return;
 }
 
 
