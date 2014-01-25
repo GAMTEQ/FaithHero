@@ -15,11 +15,19 @@ class PathFinder : public BaseSprite, public MsgHandler {
 public:
 	~PathFinder();
 protected:
+    PathFinder()
+    : _outlineSprite(NULL)
+    {
+    }
 	bool initSelf(Map* map);
 // 接口
 public:
     virtual void handleServerMsg(MsgBase* msgBase);
     virtual int getObjId();
+    virtual void setDisplayFrame(CCSpriteFrame *pNewFrame);
+	virtual void setPosition(const CCPoint& pos);
+    virtual void setAnchorPoint(const CCPoint& anchor);
+    virtual void setScale(float fScale);
 public:
 	virtual bool update(double dt);
 	virtual void setTarget(CCPoint target);
@@ -38,6 +46,7 @@ public:
 protected:
 	// 初始化角色值,站立,行走,战斗动作纹理
 	virtual void initSpecialProperty() = 0;
+    void createOutlineSprite();
 private:
 	void calculateShotestPath();
 	DetectTiles getDetectTilesOnDirect();
@@ -49,6 +58,7 @@ protected:
 	CC_SYNTHESIZE(bool, _isRoleInAttack, IsRoleInAttack);
 	CC_SYNTHESIZE_PASS_BY_REF(DetectOval, _attackOval, AttackOval);
 	CC_SYNTHESIZE(TEDirect, _direct, Direct); // 当前行进的方向
+    CCSprite* _outlineSprite; // 轮廓精灵
 protected: // 角色值
 	CC_SYNTHESIZE(float, _speed, Speed);
 	CC_SYNTHESIZE(float, _health, Health);

@@ -38,7 +38,6 @@ public:
 // 工具
 protected:
 	virtual void initSpecialProperty();
-    void createOutlineSprite();
 // 属性
 protected:
 	CC_SYNTHESIZE(float, _mage, Mage);

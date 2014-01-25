@@ -71,8 +71,11 @@ class Swordsman : public PathFinder {
 public:
 	static Swordsman* createSelf(Map* map) {
 		Swordsman* self = new Swordsman;
+        CCLog("====1swordman create trace retain count %d", self->retainCount());
 		if(self && self->initSelf(map)) {
+            CCLog("====2swordman create trace retain count %d", self->retainCount());
 			self->autorelease();
+            CCLog("====3swordman create trace retain count %d", self->retainCount());
 			return self;
 		}
 		CC_SAFE_DELETE(self);

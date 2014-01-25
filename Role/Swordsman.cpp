@@ -4,7 +4,9 @@
 #include "DamageNumPool.h"
 
 bool Swordsman::initSelf(Map* map) {
+            CCLog("====4swordman create trace retain count %d", this->retainCount());
 	if(PathFinder::initSelf(map)) {
+                CCLog("====5swordman create trace retain count %d", this->retainCount());
 		_attackOval.init(2, 2, map->getTileSize().width, map->getTileSize().height);
 		_detectOval.init(10, 10, map->getTileSize().width, map->getTileSize().height);
 		_state = eEnemyStateWait;
@@ -38,7 +40,9 @@ void Swordsman::initSpecialProperty() {
 	_speed = 50;
 	// 起始纹理
 	// 起始纹理
+    CCLog("====8swordman create trace retain count %d", this->retainCount());
 	this->initWithSpriteFrameName("00_stand_down_00.png");
+    CCLog("====9swordman create trace retain count %d", this->retainCount());
 	this->setAnchorPoint(ccp(0.5, 0.05));
 	this->setScale(3);
 	// 战斗动作

@@ -15,6 +15,7 @@ PathFinder::~PathFinder() {
 	CC_SAFE_RELEASE(_standAnimations);
 	CC_SAFE_RELEASE(_laydownAnimations);
 	CC_SAFE_RELEASE(_deadAction);
+    _outlineSprite->removeFromParentAndCleanup(TRUE);// 析构角色时，同时析构轮廓精灵
 }
 
 void PathFinder::setTarget(CCPoint target) {
@@ -89,17 +90,31 @@ bool PathFinder::update(double dt) {
 }
 
 bool PathFinder::initSelf(Map* map) {
+            CCLog("====6swordman create trace retain count %d", this->retainCount());
 	if(BaseSprite::initSelf(map)) {
-		_dead = false;
+                CCLog("====7swordman create trace retain count %d", this->retainCount());
+        _outlineSprite = NULL;
+        // 初始化轮廓精灵，注意，这个精灵必须先初始化，因为PathFinder的setPosition和setDisplayFrame方法都要用到这个精灵！！！（否则会CORE）
+        createOutlineSprite();
+        CCLog("====10swordman create trace retain count %d", this->retainCount());
+	
+        _dead = false;
 		_target = INVALID_POINT;
 		_direct = eDirectDown;
 		_targetSprite = NULL;
 		_currPathNode = 0;
 		_isRoleInAttack = false;
+        CCLog("====11swordman create trace retain count %d", this->retainCount());
 		// 动作
 		_deadAction = CCSequence::createWithTwoActions(
 			CCFadeOut::create(4.0f), CCCallFuncN::create(this, callfuncN_selector(PathFinder::callbackDead)));
+        CCLog("====12swordman create trace retain count %d", this->retainCount());
 		_deadAction->retain();
+        CCLog("====13swordman create trace retain count %d", this->retainCount());
+        //??? 不知道为什么，这两句移到基类就没效果了，在子类才有效果，坑！！！待解决
+        //this->setAnchorPoint(ccp(0.5, 0.05));
+        //this->setScale(3);
+        
 		initSpecialProperty();
 		// 动作类 实验
 		return true;
@@ -198,6 +213,45 @@ void PathFinder::handleServerMsg(MsgBase* msgBase) {
 int PathFinder::getObjId() {
     return getObjectId();
 }
+
+void PathFinder::createOutlineSprite() {
+    _outlineSprite = CCSprite::create();
+    _outlineSprite->setOpacity(100);
+    _map->getTiledMap()->addChild(_outlineSprite, _map->getHighestZorder());
+}
+
+ 
+ // 重写setDisplayFrame函数，每次调用时，都会绘制轮廓精灵
+void PathFinder::setDisplayFrame(CCSpriteFrame *pNewFrame) {
+    BaseSprite::setDisplayFrame(pNewFrame);
+    if(_outlineSprite)
+        _outlineSprite->setDisplayFrame(pNewFrame);
+}
+ 
+void PathFinder::setPosition(const CCPoint& pos) {
+    BaseSprite::setPosition(pos);
+    if(_outlineSprite)
+        _outlineSprite->setPosition(pos);
+}
+
+
+void PathFinder::setAnchorPoint(const CCPoint& anchor)
+{
+    CCSprite::setAnchorPoint(anchor);
+    if(_outlineSprite)
+        _outlineSprite->setAnchorPoint(anchor);
+}
+
+void PathFinder::setScale(float fScale)
+{
+    CCSprite::setScale(fScale);
+    if(_outlineSprite)
+        _outlineSprite->setScale(fScale);
+}
+
+
+
+
 
 
 

@@ -28,7 +28,8 @@ void Mainrole::initSpecialProperty() {
 	// 起始纹理
 	this->initWithSpriteFrameName("01_stand_down_00.png");
     this->setOpacity(255);//!!! 必须在initWith函数后面，否则起不到透明效果，怀疑是上面的函数set过了
-	this->setAnchorPoint(ccp(0.5, 0.05));
+    //??? 不知道为什么，这两句移到基类就没效果了，在子类才有效果，坑！！！待解决
+    this->setAnchorPoint(ccp(0.5, 0.05));
 	this->setScale(3);
 	// 战斗动作
 	const char* fightFrameArray[NUM_DIRECT] = {
@@ -98,9 +99,6 @@ bool Mainrole::update(double dt) {
     return true;
 }
 
-void Mainrole::createOutlineSprite() {
-    return;
-}
 
 
 
