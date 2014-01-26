@@ -8,3 +8,5 @@ Dependency:
 cocos2d-x 2.2.1
 
 pomelo 0.8.0
+
+Visit http://www.cnblogs.com/gamteq/ to see my blogs.
