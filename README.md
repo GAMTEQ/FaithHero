@@ -11,4 +11,4 @@ pomelo 0.8.0
 
 Blog: http://www.cnblogs.com/gamteq/
 
-Email: gamteq@gmail.com
+e-mail: gamteq@gmail.com
