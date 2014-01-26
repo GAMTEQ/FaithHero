@@ -55,6 +55,7 @@ public:
 	void registerEffect(Arrow* arrow);
 	vector<int> lineCrossTiles(const CCPoint& pointA, const CCPoint& pointB);
 	CCPoint convertPosToMap(const CCPoint& pos, CCPoint& tilePosOnMap);
+    void callbackRecycleDamageNum(CCNode* actionOwner);
 public: // 发送消息的接口
 	void sendEventLifeAndMage(float deltaLife, float deltaMage);
 	void sendInitEventToMediator(); // 连接地图和面板后,地图向面板发的第一次消息

@@ -4,9 +4,7 @@
 #include "DamageNumPool.h"
 
 bool Swordsman::initSelf(Map* map) {
-            CCLog("====4swordman create trace retain count %d", this->retainCount());
 	if(PathFinder::initSelf(map)) {
-                CCLog("====5swordman create trace retain count %d", this->retainCount());
 		_attackOval.init(2, 2, map->getTileSize().width, map->getTileSize().height);
 		_detectOval.init(10, 10, map->getTileSize().width, map->getTileSize().height);
 		_state = eEnemyStateWait;
@@ -25,9 +23,10 @@ bool Swordsman::initSelf(Map* map) {
 		closeHealthBar();
 		this->addChild(_healthBar);
 		// action
+        //!!!??? 又是此处，这里会导致引用计数，copy时也会，特别恶心！
 		_damageNumAction = CCSequence::createWithTwoActions(
-			CCMoveBy::create(0.5, ccp(0, 20)), 
-			CCCallFuncN::create(this, callfuncN_selector(Swordsman::callbackRecycleDamageNum)));
+			CCMoveBy::create(0.5, ccp(0, 20)),
+			CCCallFuncN::create(_map, callfuncN_selector(Map::callbackRecycleDamageNum)));
 		_damageNumAction->retain();
 		return true;
 	}
@@ -40,9 +39,7 @@ void Swordsman::initSpecialProperty() {
 	_speed = 50;
 	// 起始纹理
 	// 起始纹理
-    CCLog("====8swordman create trace retain count %d", this->retainCount());
 	this->initWithSpriteFrameName("00_stand_down_00.png");
-    CCLog("====9swordman create trace retain count %d", this->retainCount());
 	this->setAnchorPoint(ccp(0.5, 0.05));
 	this->setScale(3);
 	// 战斗动作
@@ -85,19 +82,12 @@ void Swordsman::beingAttack(float decreaseHealth) {
 	this->setHealth(this->getHealth() - decreaseHealth);
 	CCLabelBMFont* damageNum = _map->getDamageNumPool()->allocate();
     damageNum->setScale(0.3);
-	char numStr[16] = ":";
-	//_itoa(decreaseHealth, numStr + 1, 10);
-	decreaseHealth = 5;
-    damageNum->setString(":20");
+	char numStr[16];
+    damageNum->setString(numStr);
 	damageNum->setPosition(ccp(getContentSize().width / 2, getContentSize().height));
 	this->addChild(damageNum);
 	damageNum->runAction((CCAction*)_damageNumAction->copy());
 	//_map->getDamageNumPool()->recycle(damageNum);
-}
-
-void Swordsman::callbackRecycleDamageNum(CCNode* actionOwner) {
-	actionOwner->removeFromParent();
-	this->_map->getDamageNumPool()->recycle((CCLabelBMFont*)actionOwner);
 }
 
 void Swordsman::handleServerMsg(MsgBase* msgBase) {
@@ -114,6 +104,12 @@ void Swordsman::handleServerMsg(MsgBase* msgBase) {
         default:
             break;
     }
+}
+
+Swordsman::~Swordsman() {
+    CCLog("~Swordsman");
+    CC_SAFE_RELEASE(_stateMachine);
+    CC_SAFE_RELEASE(_damageNumAction);
 }
 
 

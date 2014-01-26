@@ -20,6 +20,7 @@ public:
 		CC_SAFE_DELETE(self);
 		return NULL;
 	}
+    ~Arrow();
 protected:
 	bool initSelf(Map* map, const CCPoint& startPos, PathFinder* targetSprite);
 // 接口

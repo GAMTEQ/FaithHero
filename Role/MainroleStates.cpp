@@ -142,7 +142,7 @@ void MainroleAttack::execute(Mainrole* stateOwner, double dt) {
 	}
 	stateOwner->detectEnemyOval(stateOwner->getTargetSprite()); // 检测敌人是否在攻击范围
 	if(stateOwner->getIsRoleInAttack()) { // 如果敌人还在攻击范围
-		CCPoint toTarget = stateOwner->getTargetSprite()->getPosition() - stateOwner->getPosition();
+        CCPoint toTarget = stateOwner->getTargetSprite()->getPosition() - stateOwner->getPosition();
 		stateOwner->setDirect(stateOwner->getClosestDirect(toTarget.normalize()));
 		stateOwner->runActionFight(dt);
 	}

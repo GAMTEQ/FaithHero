@@ -6,7 +6,12 @@
 #include "ActionAnimation.h"
 
 void PathFinder::callbackDead(CCNode* actionOwner) {
+    int retainCount = actionOwner->retainCount();
+    CCLog("PathFinder::callbackDead count %d", retainCount);
+    //actionOwner->retain();
+    //actionOwner->retain();
 	actionOwner->removeFromParent();
+    CCLog("PathFinder::callbackDead2 count %d", actionOwner->retainCount());
 }
 
 PathFinder::~PathFinder() {
@@ -90,13 +95,10 @@ bool PathFinder::update(double dt) {
 }
 
 bool PathFinder::initSelf(Map* map) {
-            CCLog("====6swordman create trace retain count %d", this->retainCount());
 	if(BaseSprite::initSelf(map)) {
-                CCLog("====7swordman create trace retain count %d", this->retainCount());
         _outlineSprite = NULL;
         // 初始化轮廓精灵，注意，这个精灵必须先初始化，因为PathFinder的setPosition和setDisplayFrame方法都要用到这个精灵！！！（否则会CORE）
         createOutlineSprite();
-        CCLog("====10swordman create trace retain count %d", this->retainCount());
 	
         _dead = false;
 		_target = INVALID_POINT;
@@ -104,13 +106,11 @@ bool PathFinder::initSelf(Map* map) {
 		_targetSprite = NULL;
 		_currPathNode = 0;
 		_isRoleInAttack = false;
-        CCLog("====11swordman create trace retain count %d", this->retainCount());
 		// 动作
-		_deadAction = CCSequence::createWithTwoActions(
-			CCFadeOut::create(4.0f), CCCallFuncN::create(this, callfuncN_selector(PathFinder::callbackDead)));
-        CCLog("====12swordman create trace retain count %d", this->retainCount());
-		_deadAction->retain();
-        CCLog("====13swordman create trace retain count %d", this->retainCount());
+		_deadAction = CCSequence::createWithTwoActions(CCFadeOut::create(4.0f),
+                                                       CCRemoveSelf::create());
+        _deadAction->retain();
+        // CCCallFuncN::create(this, callfuncN_selector(PathFinder::callbackDead))
         //??? 不知道为什么，这两句移到基类就没效果了，在子类才有效果，坑！！！待解决
         //this->setAnchorPoint(ccp(0.5, 0.05));
         //this->setScale(3);
@@ -204,7 +204,9 @@ void PathFinder::runActionLaydown(float dt) {
 }
 
 void PathFinder::runActionDead() {
-	this->runAction(_deadAction);
+    CCLog("PathFinder::runActionDead retain count %d", this->retainCount()); //??? 是1，是正常的
+    this->runAction(_deadAction);
+    CCLog("PathFinder::runActionDead2 retain count %d", this->retainCount()); //??? 是2，奇怪。说明runAction时也会对this引用计数
 }
 
 void PathFinder::handleServerMsg(MsgBase* msgBase) {

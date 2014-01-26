@@ -60,3 +60,7 @@ void Arrow::reachTarget() {
 	_map->dealDeadEffect(this);	
 }
 
+Arrow::~Arrow() {
+    CCLog("~Arrow");
+}
+

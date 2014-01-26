@@ -21,9 +21,7 @@ public:
 		CC_SAFE_DELETE(self);
 		return NULL;
 	}
-	~ArrowFireBomb() {
-		CC_SAFE_RELEASE_NULL(_jet);
-	}
+	~ArrowFireBomb();
 protected:
 	bool initSelf(Map* map, const CCPoint& startPos, PathFinder* targetSprite);
 // 接口

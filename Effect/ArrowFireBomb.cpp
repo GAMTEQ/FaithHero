@@ -3,6 +3,11 @@
 #include "PathFinder.h"
 #include "ParticleSys.h"
 
+ArrowFireBomb::~ArrowFireBomb() {
+    CCLog("~ArrowFireBomb");
+    CC_SAFE_RELEASE_NULL(_jet);
+}
+
 bool ArrowFireBomb::initSelf(Map* map, const CCPoint& startPos, PathFinder* targetSprite) {
 	if(Arrow::initSelf(map, startPos, targetSprite)) {
 		_jet = CCParticleSystemQuad::create("particle/jet.plist");

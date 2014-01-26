@@ -18,7 +18,7 @@ void SwordsmanGlobal::execute(Swordsman* stateOwner, double dt) {
 	PathFinder* role = stateOwner->_map->getPathFinder();
 	if(!role || role->getDead()) return; // 如果主角死了,就不移动了
 	if(stateOwner->getHealth() <= 0.0) { // 如果自己已经死了,则不再处理
-		stateOwner->dealDead();
+        stateOwner->dealDead();
 		return;
 	}
 	stateOwner->detectEnemyOval(role);

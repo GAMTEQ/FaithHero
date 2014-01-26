@@ -282,17 +282,12 @@ bool Map::buildSprite(const int& type, const CCPoint& pos, const CCPoint& tilePo
 	case eTypeEnemySwordsman:
         CCLog("eTypeEnemySwordsman objectId %d", objectId);
 		newSprite = Swordsman::createSelf(this);
-        CCLog("====4deadRole retain count %d", newSprite->retainCount());
 		newSprite->setPosition(pos);
         ((Swordsman*)newSprite)->setObjectId(objectId);
 		_allPathFinders->addObject(newSprite);
-        CCLog("====5deadRole retain count %d", newSprite->retainCount());
 		_enemySwordsman->addObject(newSprite);
-        CCLog("====6deadRole retain count %d", newSprite->retainCount());
 		_tiledMap->addChild(newSprite);
-        CCLog("====7deadRole retain count %d", newSprite->retainCount());
         _msgDispatcher.addObject((MsgHandler*)(Swordsman*)newSprite); //!!!注意，指针不能随便强转！只能转成父类
-        CCLog("====8deadRole retain count %d", newSprite->retainCount());
 		break;
 	default:
 		return false;
@@ -327,12 +322,9 @@ void Map::update(float dt) {
 			// 游戏状态进入结束状态
 		}
 		else {
-            CCLog("====3deadRole retain count %d", deadRole->retainCount());
 			_enemySwordsman->removeObject(deadRole);
 		}
-        CCLog("====2deadRole retain count %d", deadRole->retainCount());
 		_allPathFinders->removeObject(deadRole);
-        CCLog("====1deadRole retain count %d", deadRole->retainCount());
 		deadRole->runActionDead();
 		// 如果角色是主角,则游戏结束
 	}
@@ -468,6 +460,11 @@ void Map::sendInitEventToMediator() {
 	getMediator()->sendMapEvent(evt);
 	EventDecreaseLifeAndMage* newEvent = EventDecreaseLifeAndMage::createSelf(_mainrole->getHealth(), _mainrole->getMage());
 	_mediator->sendMapEvent(newEvent);
+}
+
+void Map::callbackRecycleDamageNum(CCNode* actionOwner) {
+	actionOwner->removeFromParent();
+	this->getDamageNumPool()->recycle((CCLabelBMFont*)actionOwner);
 }
 
 
