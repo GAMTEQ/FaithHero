@@ -10,4 +10,5 @@ cocos2d-x 2.2.1
 pomelo 0.8.0
 
 Blog: http://www.cnblogs.com/gamteq/
+
 Email: gamteq@gmail.com
