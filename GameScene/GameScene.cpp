@@ -4,6 +4,7 @@
 #include "PanelLayer.h"
 #include "LayerMediator.h"
 #include "LayerEvent.h"
+#include "ConfigLoader.h"
 
 GameScene* GameScene::createSelf() {
 	GameScene* scene = new GameScene;
@@ -24,6 +25,8 @@ GameScene::~GameScene() {
 
 bool GameScene::initSelf() {
 	if(CCScene::init()) {
+        ConfigLoader configLoader;
+        configLoader.loadConfigScript();
 		// 构造层
 		_TouchLayer = TouchLayer::createSelf();
 		_TouchLayer->retain();
