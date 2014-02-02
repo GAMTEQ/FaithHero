@@ -1,9 +1,9 @@
 varString = "ConfigString"
 varInteger = 123
 
--- define class table
+-- Lua中模拟一个类
 
-table = {name = "John", age = 20, x = 0, y = 0}
+table = {name = "Mike", age = 20, x = 0, y = 0}
 table.__index = table;
 
 function table:new(x, y)
@@ -25,8 +25,8 @@ end
 
 -- try table
 
-object1 = table:new(10, 2)
-object2 = table:new(9, 3)
+object1 = table:new(100, 20)
+object2 = table:new(90, 30)
 print("name = " .. object1.name)
 object1:sub()
 object1:test()
@@ -36,6 +36,37 @@ object1:test()
 
 varString = object1.name
 varInteger = object1.x + object2.y
+
+-- make a complex table for c++ reading
+
+resultTable = {
+	name = "Merciel",
+	company = "GAMTEQ",
+	age = 1,
+	skill = {"C++", "Lua", "JavaScript", db = {dbname = "Oracle", dbversion = "9.1"}},
+	objType = {type1 = "Master", type2 = "Monster"},
+	eState = {0, 1, 2, {8, 9, 10}, 3}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
