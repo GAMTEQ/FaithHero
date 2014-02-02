@@ -4,7 +4,7 @@
 #include "PanelLayer.h"
 #include "LayerMediator.h"
 #include "LayerEvent.h"
-#include "ConfigLoader.h"
+#include "LuaLoader.h"
 
 GameScene* GameScene::createSelf() {
 	GameScene* scene = new GameScene;
@@ -25,8 +25,8 @@ GameScene::~GameScene() {
 
 bool GameScene::initSelf() {
 	if(CCScene::init()) {
-        ConfigLoader configLoader;
-        configLoader.loadConfigScript();
+        LuaLoader luaLoader;
+        luaLoader.reloadScript("BaseConfig.lua", "resultTable");
 		// 构造层
 		_TouchLayer = TouchLayer::createSelf();
 		_TouchLayer->retain();

@@ -17,13 +17,18 @@ extern "C" {
 #include "lauxlib.h"
 }
 
-class ConfigLoader {
+class LuaLoader {
 public:
-    ConfigLoader();
-    ~ConfigLoader();
-    bool loadConfigScript();
+    LuaLoader();
+    ~LuaLoader();
+    bool reloadScript(const char* scriptFile, const char* resultTable);
+private:
+    void clean(); //!!! 清空栈和字典，如果加载其他lua脚本，用不用重生成lua_State?
+    void parseLuaTable(lua_State* l);
+    void loadTableToDict(lua_State* l, const char* resultTable);
 private:
     lua_State* _luaState;
+    CCDictionary* _resultDict;
 };
 
 #endif
