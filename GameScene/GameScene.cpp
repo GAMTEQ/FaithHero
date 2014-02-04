@@ -5,6 +5,7 @@
 #include "LayerMediator.h"
 #include "LayerEvent.h"
 #include "LuaLoader.h"
+#include "MenuLayer.h"
 
 GameScene* GameScene::createSelf() {
 	GameScene* scene = new GameScene;
@@ -21,6 +22,7 @@ GameScene::~GameScene() {
 	CC_SAFE_RELEASE_NULL(_TouchLayer);
 	CC_SAFE_RELEASE_NULL(_MapLayer);
 	CC_SAFE_RELEASE_NULL(_PanelLayer);
+	CC_SAFE_RELEASE_NULL(_menuLayer);
 }
 
 bool GameScene::initSelf() {
@@ -34,14 +36,18 @@ bool GameScene::initSelf() {
 		_MapLayer->retain();
 		_PanelLayer = PanelLayer::createSelf();
 		_PanelLayer->retain();
+        _menuLayer = MenuLayer::createSelf();
+        _menuLayer->retain();
 		// 把层添加给scene
         CCPoint ori = CCEGLView::sharedOpenGLView()->getVisibleOrigin();
 		this->addChild(_MapLayer, eLayerZorderMap);
 		this->addChild(_PanelLayer, eLayerZorderPanel);
 		this->addChild(_TouchLayer, eLayerZorderTouch);
+        //this->addChild(_menuLayer, eLayerZorderPanel + 1);
         _PanelLayer->setPosition(ori);
         _MapLayer->setPosition(ori);
         _TouchLayer->setPosition(ori);
+        _menuLayer->setPosition(ori);
 		// 为触摸层添加代理
 		_TouchLayer->addDelegate(_PanelLayer); // 优先响应界面层
 		_TouchLayer->addDelegate(_MapLayer); // 次优先相应地图层

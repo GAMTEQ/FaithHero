@@ -8,6 +8,7 @@
 class SkillBar;
 class RolePanel;
 class MiniMap;
+class BaseButton;
 
 // 先构造MapLayer,然后用MapLayer生成的Map来构造PanelLayer
 // 然后把PanelLayer生成的Mediator注册进MapLayer
@@ -30,6 +31,7 @@ private:
 private:
 	CCSize _screenSize; // 屏幕尺寸
 private: // 面板组件
+    BaseButton* _gameCloseButton;
 	SkillBar* _skillBarLeft;
 	SkillBar* _skillBarRight;
 	RolePanel* _rolePanel;

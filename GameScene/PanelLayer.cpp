@@ -61,6 +61,13 @@ void PanelLayer::createSprites() {
 	//_miniMap = MiniMap::createSelf("minimap.png");
 	//_miniMap->setPosition(ccp(_screenSize.width - _miniMap->getContentSize().width, _screenSize.height - _miniMap->getContentSize().height));
 	//this->addChild(_miniMap);
+    // 按钮
+    _gameCloseButton = BaseButton::createSelf(this, "GameCloseButton.png");
+    _gameCloseButton->setAnchorPoint(ccp(0, 0));
+    _gameCloseButton->setPosition(ccp(_screenSize.width - _gameCloseButton->boundingBox().size.width,
+                                      _screenSize.height - _gameCloseButton->boundingBox().size.height));
+    //_gameCloseButton->setPosition(_rolePanel->getPosition());
+    this->addChild(_gameCloseButton);
 }
 
 bool PanelLayer::singleTouch(const CCPoint& pos) {

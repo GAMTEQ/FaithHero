@@ -20,6 +20,7 @@ public:
 protected:
 	bool initSelf(PanelLayer* panelLayer, const string& frameName) {
 		if(PanelComponent::initSelf(panelLayer)) {
+            //this->initWithFile(frameName.c_str()); //!!! 不能用这个，FRAME_NAME和FILE_NAME只能选一个！！！
 			this->initWithSpriteFrameName(frameName.c_str());
 			this->setAnchorPoint(ccp(0.5, 0.5));
 			return true;
