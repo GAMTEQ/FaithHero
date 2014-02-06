@@ -7,7 +7,6 @@ class MapLayer;
 class TouchLayer;
 class PanelLayer;
 class LayerMediator;
-class MenuLayer;
 
 class GameScene : public CCScene {
 // 构造
@@ -25,7 +24,6 @@ private:
 	CC_SYNTHESIZE_READONLY(TouchLayer*, _TouchLayer, TouchLayer);
 	CC_SYNTHESIZE_READONLY(MapLayer*, _MapLayer, MapLayer);
 	CC_SYNTHESIZE_READONLY(PanelLayer*, _PanelLayer, PanelLayer);
-	CC_SYNTHESIZE_READONLY(MenuLayer*, _menuLayer, MenuLayer);
 };
 
 #endif  // _SCENE_RUN__H_

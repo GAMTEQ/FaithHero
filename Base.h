@@ -31,6 +31,10 @@ enum zLoginScene {
 #define DAMAGE_NUM_STEP 4
 #define DAMAGE_NUM_REL_SIZE 0.05f
 
+#define TABLEVIEW_ITEM_WIDTH 600
+#define TABLEVIEW_ITEM_HEIGHT 90
+#define TABLEVIEW_ITEM_ORI_NUM 5
+
 enum ELayerZorder {
 	eLayerZorderMap = 0,
 	eLayerZorderPanel,

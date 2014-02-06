@@ -31,7 +31,7 @@ bool MapLayer::initSelf() {
 
 void MapLayer::createSprites() {
 	// 背景
-	CCSprite* bg = CCSprite::create("bg.png");
+	//CCSprite* bg = CCSprite::create("bg.png");
 	//bg->setPosition(ccp(_screenSize.width * 0.5f, _screenSize.height * 0.5f));
 	//bg->setColor(ccc3(255, 255, 255));
 	//this->addChild(bg, ezBackground);
