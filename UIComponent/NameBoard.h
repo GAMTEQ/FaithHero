@@ -32,7 +32,7 @@ protected:
 			_levelEndPos = ccp(_boardSize.width * _levelEndRelPos.x, _boardSize.height * _levelEndRelPos.y);
 			_name = CCLabelTTF::create(
 				name.c_str(), 
-				"Comic Sans MS", 
+				"Comic Sans MS",
 				28, 
 				CCSizeMake(_nameEndPos.x - _nameOriPos.x, _nameEndPos.y - _nameOriPos.y),
 				kCCTextAlignmentCenter,
@@ -40,8 +40,9 @@ protected:
 			_name->setAnchorPoint(ccp(0, 0));
 			_name->setPosition(_nameOriPos);
 			this->addChild(_name);
-			char levelStr[16] = "Lv.";
+			char levelStr[16];
 			//itoa(level, levelStr + 3, 10);
+            snprintf(levelStr, 16, "Lv.%d", level);
 			level = 10;
             _level = CCLabelTTF::create(
 				levelStr, 

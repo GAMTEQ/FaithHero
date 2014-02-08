@@ -61,6 +61,15 @@ bool MenuLayer::initSelf() {
 void MenuLayer::tableCellTouched(CCTableView* table, CCTableViewCell* cell)
 {
     CCLOG("cell touched at index: %i", cell->getIdx());
+    switch (cell->getIdx()) {
+        case 0:
+            CCLog("MenuLayer::tableCellTouched game exit");
+            CCDirector::sharedDirector()->end();
+            exit(0);
+            break;
+        default:
+            break;
+    }
 }
 
 CCSize MenuLayer::tableCellSizeForIndex(CCTableView *table, unsigned int idx)
@@ -70,7 +79,15 @@ CCSize MenuLayer::tableCellSizeForIndex(CCTableView *table, unsigned int idx)
 
 CCTableViewCell* MenuLayer::tableCellAtIndex(CCTableView *table, unsigned int idx)
 {
-    CCString *string = CCString::createWithFormat("SETUP ITEM %d", idx);
+    CCString* string = NULL;
+    switch (idx) {
+        case 0:
+            string = CCString::createWithFormat("GAME EXIT");
+            break;
+        default:
+            string = CCString::createWithFormat("SETUP ITEM %d", idx);
+            break;
+    }
     CCTableViewCell *cell = table->dequeueCell();
     if (!cell) {
         cell = new MenuTableViewCell();

@@ -66,6 +66,7 @@ void Mainrole::runActionFight(float dt) {
 	if(actionState == eActionStateEnd) {
 		// 动作的末尾自动生成一支箭,自动注册进_map里
 		ArrowFireBomb::createSelf(_map, this->getAttackPosition(), this->getTargetSprite());
+        //Arrow::createSelf(_map, this->getAttackPosition(), this->getTargetSprite());
 	}
 }
 
