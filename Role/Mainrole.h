@@ -25,6 +25,7 @@ protected:
 	bool initSelf(Map* map);
 // 接口
 public:
+    void useFireSkillOnce();
 	virtual bool update(double dt);
 	void detectEnemyOval(PathFinder* pathFinder) {
 		_isRoleInAttack = _attackOval.isInOval(this->getPosition(), pathFinder->getPosition());
@@ -43,6 +44,7 @@ protected:
 	CC_SYNTHESIZE(float, _mage, Mage);
 	CC_SYNTHESIZE(TEMainroleState, _state, State);
 	CC_SYNTHESIZE_READONLY(StateMachine<Mainrole>*, _stateMachine, StateMachine); // 状态机
+    int _fireSkillCount;
 };
 
 #endif // _MAINROLE__H_

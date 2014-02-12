@@ -35,41 +35,41 @@ bool PanelLayer::initSelf() {
 
 void PanelLayer::createSprites() {
 	CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("uis.plist");
-	// 左侧动作条
-	_skillBarLeft = SkillBar::createSelf(3, 20, CCSize(200, 200), true);
-	this->addChild(_skillBarLeft);
-	_skillBarLeft->setPosition(ccp(40, 50));
-	_skillBarLeft->setButton(BaseButton::createSelf(this, "skill_normal_00.png"), 2);
-	_skillBarLeft->setButton(BaseButton::createSelf(this, "skill_rush_00.png"), 1);
-	_skillBarLeft->setButton(BaseButton::createSelf(this, "skill_fire_00.png"), 0);
-	// 右侧动作条
-	_skillBarRight = SkillBar::createSelf(3, 20, CCSize(200, 200), true);
-	this->addChild(_skillBarRight);
-	_skillBarRight->setPosition(ccp(_screenSize.width - 240, 50));
-	_skillBarRight->setButton(BaseButton::createSelf(this, "skill_heal_00.png"), 2);
-	_skillBarRight->setButton(BaseButton::createSelf(this, "skill_ice_00.png"), 1);
-	_skillBarRight->setButton(BaseButton::createSelf(this, "skill_ride_00.png"), 0);
+	createSkillButton();
 	// 人物面板
 	_rolePanel = RolePanel::createSelf(this);
 	_rolePanel->setAnchorPoint(ccp(0, 0));
 	_rolePanel->setPosition(ccp(0, _screenSize.height - _rolePanel->getPanelSize().height));
 	this->addChild(_rolePanel);
-	// 迷你地图
-	//_miniMap = MiniMap::createSelf("minimap.png");
-	//_miniMap->setPosition(ccp(_screenSize.width - _miniMap->getContentSize().width, _screenSize.height - _miniMap->getContentSize().height));
-	//this->addChild(_miniMap);
     // 按钮
     createMenu();
     return;
 }
 
 bool PanelLayer::singleTouch(const CCPoint& pos) {
-	if(_skillBarLeft->boundingBox().containsPoint(pos)) {
-		
-	}
-	else if(_skillBarRight->boundingBox().containsPoint(pos)) {
-	
-	}
+    for(int i = 0; i != _buttonVector.size(); ++i) {
+        if(_buttonVector[i]->boundingBox().containsPoint(pos)) {
+            CCLog("PanelLayer::singleTouch touched!");
+            //_buttonVector[i]->singleTouch(pos);
+            // 1 找到对应的动作
+            // 2 判断动作是否能执行
+            // 3 按钮开始冷却
+            // 4 发送动作给精灵
+            map<int, SSkillDetail>::const_iterator iSkill = _skillDetailMap.find(_buttonVector[i]->getSkillId());
+            if(iSkill == _skillDetailMap.end()) {
+                CCLog("did't find skillId");
+            }
+            else {
+                if(!_buttonVector[i]->getIsCold()) {
+                    _buttonVector[i]->cold();
+                    CCLog("use fire skill");
+                    EventSkillFire* newEvent = EventSkillFire::createSelf();
+                    _mediatorToMap->sendPanelEvent(newEvent);
+                }
+            }
+            return true;
+        }
+    }
 	return false;
 }
 
@@ -150,6 +150,41 @@ void PanelLayer::onButtonBack(cocos2d::CCObject *sender)
     _menuLayer->removeFromParent();
     _buttons->setTouchEnabled(true);
     _touchLayer->setTouchEnabled(true);
+}
+
+void PanelLayer::createSkillButton() {
+    SkillButton* baseButton = NULL;
+    baseButton = SkillButton::createSelf(this, "skill_normal_00.png", skill1);
+    baseButton->setPosition(ccp(40, 50) + getButtonCenterPos(baseButton->boundingBox().size, 2));
+    this->addChild(baseButton);
+    _buttonVector.push_back(baseButton);
+    baseButton = SkillButton::createSelf(this, "skill_rush_00.png", skill2);
+    baseButton->setPosition(ccp(40, 50) + getButtonCenterPos(baseButton->boundingBox().size, 1));
+    this->addChild(baseButton);
+    _buttonVector.push_back(baseButton);
+    baseButton = SkillButton::createSelf(this, "skill_fire_00.png", skill3);
+    baseButton->setPosition(ccp(40, 50) + getButtonCenterPos(baseButton->boundingBox().size, 0));
+    this->addChild(baseButton);
+    _buttonVector.push_back(baseButton);
+    baseButton = SkillButton::createSelf(this, "skill_heal_00.png", skill4);
+    baseButton->setPosition(ccp(_screenSize.width - 240, 50) + getButtonCenterPos(baseButton->boundingBox().size, 2));
+    this->addChild(baseButton);
+    _buttonVector.push_back(baseButton);
+    baseButton = SkillButton::createSelf(this, "skill_ice_00.png", skill5);
+    baseButton->setPosition(ccp(_screenSize.width - 240, 50) + getButtonCenterPos(baseButton->boundingBox().size, 1));
+    this->addChild(baseButton);
+    _buttonVector.push_back(baseButton);
+    baseButton = SkillButton::createSelf(this, "skill_ride_00.png", skill6);
+    baseButton->setPosition(ccp(_screenSize.width - 240, 50) + getButtonCenterPos(baseButton->boundingBox().size, 0));
+    this->addChild(baseButton);
+    _buttonVector.push_back(baseButton);
+    // init skill map
+    //!!! should load from sever or json config file later
+    SSkillDetail dtl;
+    dtl._skillId = 1;
+    dtl._coldTime = 6;
+    dtl._mageCost = 10;
+    _skillDetailMap[1] = dtl;
 }
 
 

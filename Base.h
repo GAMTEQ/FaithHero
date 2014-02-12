@@ -51,6 +51,15 @@ enum EMapElem {
 	emWall
 };
 
+typedef enum ESkillId {
+    skill1 = 1,
+    skill2,
+    skill3,
+    skill4,
+    skill5,
+    skill6
+} TSkillId;
+
 typedef enum EDirect {
 	eDirectUp = 0,
 	eDirectRightup,
@@ -73,7 +82,7 @@ typedef enum EEventType {
 	eEventNull = 0,
 	eEventMapDecreaseLifeAndMage,
 	eEventMapSetMaxLifeAndMage,
-	eEventSkillHeal,
+	eEventSkillFire,
 	eEventSkillNull
 } TEEventType;
 

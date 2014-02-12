@@ -18,7 +18,7 @@ public:
 	virtual void update(float dt);
 	virtual bool singleTouch(const CCPoint& pos);
 	virtual bool movingTouch(const CCPoint& from, const CCPoint& to);
-	virtual int handleEvent(MediatorEvent* mediatorEvent) { return 0;}
+	virtual int handleEvent(MediatorEvent* mediatorEvent);
 	void setMediatorToPanel(LayerMediator* mediatorToPanel);
 // 工具
 private:

@@ -98,6 +98,7 @@ void MainrolePursuit::enter(Mainrole* stateOwner) {
 }
 
 void MainrolePursuit::execute(Mainrole* stateOwner, double dt) {
+    stateOwner->cameraFollowMainrole();
 	if(!stateOwner->getTargetSprite() || stateOwner->getTargetSprite()->getDead()) { // 如果敌人已经死亡
 		return stateOwner->getStateMachine()->changeState(MainroleStand::instance());	
 	}

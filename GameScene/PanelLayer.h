@@ -8,8 +8,15 @@
 class SkillBar;
 class RolePanel;
 class MiniMap;
-class BaseButton;
+class SkillButton;
 class MenuLayer;
+class BaseButton;
+
+struct SSkillDetail {
+    int _skillId;
+    int _coldTime;
+    int _mageCost;
+};
 
 // 先构造MapLayer,然后用MapLayer生成的Map来构造PanelLayer
 // 然后把PanelLayer生成的Mediator注册进MapLayer
@@ -33,6 +40,13 @@ public:
 private:
 	void createSprites();
     void createMenu();
+    void createSkillButton();
+	CCPoint getButtonCenterPos(const CCSize& buttonSize, unsigned index) {
+		float indexf = (float)index;
+		float x = buttonSize.width / 2;
+		float y = indexf * (20 + buttonSize.height) + buttonSize.height / 2;
+		return ccp(x, y);
+	}
 // 属性
 private:
 	CCSize _screenSize; // 屏幕尺寸
@@ -47,6 +61,8 @@ private: // 面板组件
     CCMenu* _buttons; // 界面层上的按钮
 	CC_SYNTHESIZE_READONLY(CCLayer*, _menuLayer, MenuLayer);
 	CC_SYNTHESIZE(CCLayer*, _touchLayer, TouchLayer);
+    vector<SkillButton*> _buttonVector;
+    map<int, SSkillDetail> _skillDetailMap;
 };
 
 #endif  // _LAYER_PANEL__H_

@@ -63,3 +63,8 @@ void MapLayer::setMediatorToPanel(LayerMediator* mediatorToPanel) {
 	_map->sendInitEventToMediator();
 }
 
+int MapLayer::handleEvent(MediatorEvent* mediatorEvent) {
+    _map->handlePanelEvent(mediatorEvent);
+    return 0;
+}
+

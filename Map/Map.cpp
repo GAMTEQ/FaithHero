@@ -467,6 +467,20 @@ void Map::callbackRecycleDamageNum(CCNode* actionOwner) {
 	this->getDamageNumPool()->recycle((CCLabelBMFont*)actionOwner);
 }
 
+int Map::handlePanelEvent(MediatorEvent* mediatorEvent) {
+    CCLog("Map::handlePanelEvent %d", mediatorEvent->getEventType());
+    switch (mediatorEvent->getEventType()) {
+        case eEventSkillFire:
+            _mainrole->useFireSkillOnce();
+            break;
+        default:
+            break;
+    }
+}
+
+
+
+
 
 
 

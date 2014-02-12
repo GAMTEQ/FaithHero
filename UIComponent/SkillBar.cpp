@@ -68,7 +68,7 @@ void SkillBar::dealTargetTouch(const CCPoint& pos) {
 		i != _buttonVector.end(); ++i)
 	{
 		if((*i)->boundingBox().containsPoint(pos)) {
-			//(*i)->pressDown();
+			(*i)->singleTouch(pos);
 		}
 	}
 }

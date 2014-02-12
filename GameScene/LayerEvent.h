@@ -65,11 +65,11 @@ protected:
 };
 
 // 界面发送给地图: 选择治疗技能
-class EventSkillHeal : public MediatorEvent {
+class EventSkillFire : public MediatorEvent {
 // 构造
 public:
-	static EventSkillHeal* createSelf() {
-		EventSkillHeal* self = new EventSkillHeal;
+	static EventSkillFire* createSelf() {
+		EventSkillFire* self = new EventSkillFire;
 		if(self && self->initSelf()) {
 			self->autorelease();
 			return self;
@@ -81,7 +81,7 @@ public:
 public:
 protected:
 	bool initSelf() {
-		_eventType = eEventSkillHeal;
+		_eventType = eEventSkillFire;
 		return true;
 	}
 // 接口

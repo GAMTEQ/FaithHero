@@ -179,5 +179,73 @@ void LoginScene::login() {
     Network::login();
 }
 
+void LoginScene::draw() {
+    CCLayer::draw();
+    return;
+    // 数据部分，为三角形带中的4个顶点指定顶点坐标、纹理坐标、顶点颜色
+    // 顶点坐标：列：x,y,z；行：左下,右下,左上,右上
+    static GLfloat vertex[] = {
+        0.0f, 0.0f, 0.0f,
+        200.0f, 0.0f, 0.0f,
+        0.0f, 200.0f, 0.0f,
+        200.0f, 200.0f, 0.0f
+    };
+    // 纹理坐标：列：横坐标s,纵坐标t，分量的取值范围是0-1
+    static GLfloat coord[] = {
+        0.0f, 1.0f,
+        1.0f, 1.0f,
+        0.0f, 0.0f,
+        1.0f, 0.0f
+    };
+    // 颜色：列：红,蓝,绿,不透明度，分量的取值范围是0-1
+    static GLfloat color[] = {
+        1.0f, 1.0f, 1.0f, 1.0f,
+        1.0f, 1.0f, 1.0f, 1.0f,
+        1.0f, 1.0f, 1.0f, 1.0f,
+        1.0f, 1.0f, 1.0f, 1.0f
+    };
+    
+    // 初始化纹理
+    static CCTexture2D* texture2d = NULL;
+    if(!texture2d) {
+        CCLog("create texture2d opengl");
+        //texture2d = CCTexture2D::sharedTextureCache()->addImage("HelloWorld.png");
+        CCImage* image = new CCImage; // 加载图片
+        image->initWithImageFile("opengl_test.png");
+        image->autorelease();
+        texture2d = new CCTexture2D; // 用图片制作纹理
+        texture2d->initWithImage(image);
+        ///texture2d->autorelease(); //??
+        //?? 设置纹理坐标
+        coord[2] = coord[6] = texture2d->getMaxS();
+        coord[1] = coord[3] = texture2d->getMaxT();
+    }
+    // 设置着色器
+    ccGLEnableVertexAttribs(kCCVertexAttribFlag_PosColorTex);
+    texture2d->getShaderProgram()->use();
+    //texture2d->getShaderProgram()->setUniformForModelViewProjectionMatrix();
+    // 绑定纹理
+    glBindTexture(GL_TEXTURE_2D, texture2d->getName());
+    //ccGLBindTexture2D(texture2d->getName());
+    // 设置顶点数组
+    glVertexAttribPointer(kCCVertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, 0, vertex);
+    glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, 0, coord);
+    glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_FLOAT, GL_FALSE, 0, color);
+    // 绘图
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

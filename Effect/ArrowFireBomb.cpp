@@ -17,6 +17,7 @@ bool ArrowFireBomb::initSelf(Map* map, const CCPoint& startPos, PathFinder* targ
 		_jet->setPosition(ccp(0, 0));
 		_jet->setAngle(0);
 		_jet->setVisible(true);
+        _attack = 30;
 		return true;
 	}
 	return false;

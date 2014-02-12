@@ -6,7 +6,8 @@
 
 bool Mainrole::initSelf(Map* map) {
 	if(PathFinder::initSelf(map)) {
-		_attackOval.init(100, 100, map->getTileSize().width, map->getTileSize().height);
+        _fireSkillCount = 0;
+		_attackOval.init(15, 15, map->getTileSize().width, map->getTileSize().height);
 		_state = eMainroleStateStand;
 		_stateMachine = StateMachine<Mainrole>::createStateMachine(this);
 		_stateMachine->retain();
@@ -65,8 +66,13 @@ void Mainrole::runActionFight(float dt) {
 	TEActionState actionState = _fightAnimations->runDirect(this, getDirect(), dt);
 	if(actionState == eActionStateEnd) {
 		// 动作的末尾自动生成一支箭,自动注册进_map里
-		ArrowFireBomb::createSelf(_map, this->getAttackPosition(), this->getTargetSprite());
-        //Arrow::createSelf(_map, this->getAttackPosition(), this->getTargetSprite());
+        if(_fireSkillCount >= 1) {
+            ArrowFireBomb::createSelf(_map, this->getAttackPosition(), this->getTargetSprite());
+            --_fireSkillCount;
+        }
+        else {
+            Arrow::createSelf(_map, this->getAttackPosition(), this->getTargetSprite());
+        }
 	}
 }
 
@@ -98,6 +104,10 @@ void Mainrole::cameraFollowMainrole() {
 bool Mainrole::update(double dt) {
     _stateMachine->update(dt);
     return true;
+}
+
+void Mainrole::useFireSkillOnce() {
+    _fireSkillCount = 3;
 }
 
 

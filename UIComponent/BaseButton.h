@@ -27,18 +27,14 @@ protected:
 		}
 		return false;
 	}
-// 接口
-public:
-// 属性
-protected:
 };
 
 class SkillButton : public BaseButton {
 // 构造
 public:
-	static SkillButton* createSelf(PanelLayer* panelLayer, const string& frameName) {
+	static SkillButton* createSelf(PanelLayer* panelLayer, const string& frameName, TSkillId skillId) {
 		SkillButton* self = new SkillButton;
-		if(self && self->initSelf(panelLayer, frameName)) {
+		if(self && self->initSelf(panelLayer, frameName, skillId)) {
 			self->autorelease();
 			return self;
 		}
@@ -46,17 +42,23 @@ public:
 		return NULL;
 	}
 protected:
-	bool initSelf(PanelLayer* panelLayer, const string& frameName) {
+	bool initSelf(PanelLayer* panelLayer, const string& frameName, TSkillId skillId) {
 		if(BaseButton::initSelf(panelLayer, frameName)) {
+            _skillId = skillId;
+            _isCold = false;
 			return true;
 		}
 		return false;
 	}
-// 接口
+    // 接口
 public:
+    void coldEnd();
+    void cold();
 	virtual void singleTouch(const CCPoint& pos);
-// 属性
+    // 属性
 protected:
+    CC_SYNTHESIZE_READONLY(TSkillId, _skillId, SkillId);
+    CC_SYNTHESIZE_READONLY(bool, _isCold, IsCold);
 };
 
 #endif // _BASE_BUTTON__H_

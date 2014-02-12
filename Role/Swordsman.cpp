@@ -79,10 +79,12 @@ void Swordsman::dealDead() {
 }
 
 void Swordsman::beingAttack(float decreaseHealth) {
+    getStateMachine()->changeState(SwordsmanPursuit::instance());
 	this->setHealth(this->getHealth() - decreaseHealth);
 	CCLabelBMFont* damageNum = _map->getDamageNumPool()->allocate();
     damageNum->setScale(0.3);
 	char numStr[16];
+    snprintf(numStr, 16, ":%d", (int)decreaseHealth);
     damageNum->setString(numStr);
 	damageNum->setPosition(ccp(getContentSize().width / 2, getContentSize().height));
 	this->addChild(damageNum);

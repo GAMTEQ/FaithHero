@@ -59,6 +59,7 @@ public:
 public: // 发送消息的接口
 	void sendEventLifeAndMage(float deltaLife, float deltaMage);
 	void sendInitEventToMediator(); // 连接地图和面板后,地图向面板发的第一次消息
+    int handlePanelEvent(MediatorEvent* mediatorEvent);
 // 工具
 private:
     void movingMapByVectorAndBase(const CCPoint& startPos, const CCPoint& nowPos, const CCPoint& base, float factor);
