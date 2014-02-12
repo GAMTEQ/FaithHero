@@ -28,6 +28,7 @@ public:
     virtual void editBoxReturn(CCEditBox* editBox);
 // 接口
 public:
+    virtual void draw();
     void onButtonLogin(CCObject* pSender);
     void onButtonClose(CCObject* pSender);
 	void update(float delta); // cocos2d-x schedule handle callback
