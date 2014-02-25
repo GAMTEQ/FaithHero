@@ -32,7 +32,8 @@ bool Arrow::update(double dt) {
 		return true;
 	}
 	// 如果箭已射到目标,则箭消失,目标掉血
-	if(_targetSprite->getAttackPosition().getDistanceSq(this->getPosition()) < 3) { // !!! 很重要,3才不会出BUG
+	if(_targetSprite->getAttackPosition().getDistanceSq(this->getPosition()) < 20) { // !!! 很重要,3才不会出BUG
+        this->setVisible(false);
 		CCLog("Arrow::update end pos %f %f", this->getPosition().x, this->getPosition().y);
 		reachTarget();
 		return true;

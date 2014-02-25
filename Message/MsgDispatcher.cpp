@@ -26,7 +26,10 @@ void MsgDispatcher::msgFromClient(MsgBase* msgBase) {
 
 void MsgDispatcher::msgFromServer(json_t* msgJson) {
     MsgBase* msgBase = MsgBase::factory(msgJson);
-    assert(msgBase);
+    if(!msgBase) {
+        CCLog("MsgDispatcher::msgFromServer unknown msgType");
+        return;
+    }
     MsgPath* msgPath = static_cast<MsgPath*>(msgBase);
     //CCLog("MsgType: %d, ObjectId: %d, RoleState: %d, DestX: %f, DestY: %f",
     //      msgPath->getMsgType(), msgPath->getObjectId(), msgPath->getRoleState(),

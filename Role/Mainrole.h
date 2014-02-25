@@ -25,6 +25,7 @@ protected:
 	bool initSelf(Map* map);
 // 接口
 public:
+    void runActionDead();
     void useFireSkillOnce();
 	virtual bool update(double dt);
 	void detectEnemyOval(PathFinder* pathFinder) {

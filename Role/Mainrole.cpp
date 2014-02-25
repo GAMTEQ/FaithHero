@@ -22,7 +22,7 @@ bool Mainrole::initSelf(Map* map) {
 }
 
 void Mainrole::initSpecialProperty() {
-	_health = 100;
+	_health = 500; //!!!health
 	_mage = 100;
 	_attack = 10;
 	_speed = 70;
@@ -108,6 +108,10 @@ bool Mainrole::update(double dt) {
 
 void Mainrole::useFireSkillOnce() {
     _fireSkillCount = 3;
+}
+
+void Mainrole::runActionDead() {
+    return;
 }
 
 

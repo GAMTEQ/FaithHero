@@ -37,7 +37,7 @@ public:
 	virtual void runActionFight(float dt);
 	void runActionStand(float dt);
 	void runActionLaydown(float dt);
-	void runActionDead();
+	virtual void runActionDead();
 	virtual CCPoint getAttackPosition() { // 比如射箭的起始位置和中箭的终止位置
 		return getPosition() + ccp(0, 70);
 	}

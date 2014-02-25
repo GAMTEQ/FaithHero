@@ -318,8 +318,9 @@ void Map::update(float dt) {
 		PathFinder* deadRole = (PathFinder*)(*itr);
 		if(deadRole == _mainrole) {
 			CCLog("mainrole is dead, game over.");
-			assert(0);
-			// 游戏状态进入结束状态
+            //CCDirector::sharedDirector()->end();
+            CCDirector::sharedDirector()->pause();
+            // 游戏状态进入结束状态
 		}
 		else {
 			_enemySwordsman->removeObject(deadRole);

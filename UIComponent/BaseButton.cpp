@@ -6,7 +6,7 @@ void SkillButton::singleTouch(const CCPoint& pos) {
 
 void SkillButton::cold() {
     _isCold = true;
-    CCSequence* coldAction = CCSequence::createWithTwoActions(CCFadeIn::create(6.0f),
+    CCSequence* coldAction = CCSequence::createWithTwoActions(CCFadeIn::create(12.0f),
                                                               CCCallFuncN::create(this, callfuncN_selector(SkillButton::coldEnd)));
     this->runAction(coldAction);
 }
